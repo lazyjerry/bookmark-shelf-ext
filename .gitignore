@@ -1,0 +1,11 @@
+node_modules/
+out/
+.vscode-test/
+*.vsix
+*.log
+.DS_Store
+CLAUDE.md
+AGENTS.md
+.claude/
+.agents/
+**/*衝突的複本*

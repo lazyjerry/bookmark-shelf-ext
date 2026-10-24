@@ -1,0 +1,370 @@
+{
+  "name": "bookmark-shelf",
+  "displayName": "Bookmark Shelf",
+  "description": "在側邊欄瀏覽、搜尋、新增與編輯書籤收藏櫃的書籤。",
+  "version": "0.1.0",
+  "publisher": "workjerry",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lazyjerry/bookmark-shelf-ext.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lazyjerry/bookmark-shelf-ext/issues"
+  },
+  "homepage": "https://github.com/lazyjerry/bookmark-shelf-ext#readme",
+  "keywords": [
+    "bookmark",
+    "bookmarks",
+    "read later",
+    "cloudflare",
+    "書籤"
+  ],
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "extensionKind": [
+    "ui"
+  ],
+  "icon": "resources/icon.png",
+  "main": "./out/extension.js",
+  "l10n": "./l10n",
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    }
+  },
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "bookmarkShelf",
+          "title": "%bookmarkShelf.container.title%",
+          "icon": "resources/shelf.svg"
+        }
+      ]
+    },
+    "views": {
+      "bookmarkShelf": [
+        {
+          "id": "bookmarkShelf.tree",
+          "name": "%bookmarkShelf.view.name%",
+          "icon": "resources/shelf.svg",
+          "contextualTitle": "Bookmark Shelf"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "bookmarkShelf.tree",
+        "contents": "%bookmarkShelf.welcome.unconfigured%",
+        "when": "bookmarkShelf.state == unconfigured"
+      },
+      {
+        "view": "bookmarkShelf.tree",
+        "contents": "%bookmarkShelf.welcome.empty%",
+        "when": "bookmarkShelf.state == empty"
+      }
+    ],
+    "commands": [
+      {
+        "command": "bookmarkShelf.configure",
+        "title": "%bookmarkShelf.command.configure%",
+        "category": "Bookmark Shelf",
+        "icon": "$(plug)"
+      },
+      {
+        "command": "bookmarkShelf.disconnect",
+        "title": "%bookmarkShelf.command.disconnect%",
+        "category": "Bookmark Shelf"
+      },
+      {
+        "command": "bookmarkShelf.openDeployGuide",
+        "title": "%bookmarkShelf.command.openDeployGuide%",
+        "category": "Bookmark Shelf",
+        "icon": "$(book)"
+      },
+      {
+        "command": "bookmarkShelf.openWebsite",
+        "title": "%bookmarkShelf.command.openWebsite%",
+        "category": "Bookmark Shelf",
+        "icon": "$(globe)"
+      },
+      {
+        "command": "bookmarkShelf.refresh",
+        "title": "%bookmarkShelf.command.refresh%",
+        "category": "Bookmark Shelf",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "bookmarkShelf.add",
+        "title": "%bookmarkShelf.command.add%",
+        "category": "Bookmark Shelf",
+        "icon": "$(add)"
+      },
+      {
+        "command": "bookmarkShelf.addFromSelection",
+        "title": "%bookmarkShelf.command.addFromSelection%",
+        "category": "Bookmark Shelf"
+      },
+      {
+        "command": "bookmarkShelf.search",
+        "title": "%bookmarkShelf.command.search%",
+        "category": "Bookmark Shelf",
+        "icon": "$(search)"
+      },
+      {
+        "command": "bookmarkShelf.filterByTag",
+        "title": "%bookmarkShelf.command.filterByTag%",
+        "category": "Bookmark Shelf",
+        "icon": "$(tag)"
+      },
+      {
+        "command": "bookmarkShelf.filterBySite",
+        "title": "%bookmarkShelf.command.filterBySite%",
+        "category": "Bookmark Shelf"
+      },
+      {
+        "command": "bookmarkShelf.sortBy",
+        "title": "%bookmarkShelf.command.sortBy%",
+        "category": "Bookmark Shelf",
+        "icon": "$(list-ordered)"
+      },
+      {
+        "command": "bookmarkShelf.clearFilters",
+        "title": "%bookmarkShelf.command.clearFilters%",
+        "category": "Bookmark Shelf",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "bookmarkShelf.open",
+        "title": "%bookmarkShelf.command.open%",
+        "category": "Bookmark Shelf",
+        "icon": "$(link-external)"
+      },
+      {
+        "command": "bookmarkShelf.openSharePage",
+        "title": "%bookmarkShelf.command.openSharePage%",
+        "category": "Bookmark Shelf"
+      },
+      {
+        "command": "bookmarkShelf.copyUrl",
+        "title": "%bookmarkShelf.command.copyUrl%",
+        "category": "Bookmark Shelf"
+      },
+      {
+        "command": "bookmarkShelf.copyMarkdownLink",
+        "title": "%bookmarkShelf.command.copyMarkdownLink%",
+        "category": "Bookmark Shelf"
+      },
+      {
+        "command": "bookmarkShelf.edit",
+        "title": "%bookmarkShelf.command.edit%",
+        "category": "Bookmark Shelf",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "bookmarkShelf.editField",
+        "title": "%bookmarkShelf.command.editField%",
+        "category": "Bookmark Shelf"
+      },
+      {
+        "command": "bookmarkShelf.delete",
+        "title": "%bookmarkShelf.command.delete%",
+        "category": "Bookmark Shelf",
+        "icon": "$(trash)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "bookmarkShelf.add",
+          "when": "view == bookmarkShelf.tree && bookmarkShelf.state != unconfigured",
+          "group": "navigation@1"
+        },
+        {
+          "command": "bookmarkShelf.search",
+          "when": "view == bookmarkShelf.tree && bookmarkShelf.state != unconfigured",
+          "group": "navigation@2"
+        },
+        {
+          "command": "bookmarkShelf.clearFilters",
+          "when": "view == bookmarkShelf.tree && bookmarkShelf.state != unconfigured && bookmarkShelf.filtered",
+          "group": "navigation@3"
+        },
+        {
+          "command": "bookmarkShelf.refresh",
+          "when": "view == bookmarkShelf.tree && bookmarkShelf.state != unconfigured",
+          "group": "navigation@4"
+        },
+        {
+          "command": "bookmarkShelf.filterByTag",
+          "when": "view == bookmarkShelf.tree && bookmarkShelf.state != unconfigured",
+          "group": "1_filter@1"
+        },
+        {
+          "command": "bookmarkShelf.filterBySite",
+          "when": "view == bookmarkShelf.tree && bookmarkShelf.state != unconfigured",
+          "group": "1_filter@2"
+        },
+        {
+          "command": "bookmarkShelf.sortBy",
+          "when": "view == bookmarkShelf.tree && bookmarkShelf.state != unconfigured",
+          "group": "1_filter@3"
+        },
+        {
+          "command": "bookmarkShelf.openWebsite",
+          "when": "view == bookmarkShelf.tree && bookmarkShelf.state != unconfigured",
+          "group": "2_site@1"
+        },
+        {
+          "command": "bookmarkShelf.configure",
+          "when": "view == bookmarkShelf.tree",
+          "group": "3_connection@1"
+        },
+        {
+          "command": "bookmarkShelf.openDeployGuide",
+          "when": "view == bookmarkShelf.tree",
+          "group": "3_connection@2"
+        },
+        {
+          "command": "bookmarkShelf.disconnect",
+          "when": "view == bookmarkShelf.tree && bookmarkShelf.state != unconfigured",
+          "group": "3_connection@3"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "bookmarkShelf.open",
+          "when": "view == bookmarkShelf.tree && viewItem == bookmark",
+          "group": "inline@1"
+        },
+        {
+          "command": "bookmarkShelf.edit",
+          "when": "view == bookmarkShelf.tree && viewItem == bookmark",
+          "group": "inline@2"
+        },
+        {
+          "command": "bookmarkShelf.delete",
+          "when": "view == bookmarkShelf.tree && viewItem == bookmark",
+          "group": "inline@3"
+        },
+        {
+          "command": "bookmarkShelf.open",
+          "when": "view == bookmarkShelf.tree && viewItem =~ /^(bookmark|field-url)$/",
+          "group": "1_open@1"
+        },
+        {
+          "command": "bookmarkShelf.openSharePage",
+          "when": "view == bookmarkShelf.tree && viewItem == bookmark",
+          "group": "1_open@2"
+        },
+        {
+          "command": "bookmarkShelf.copyUrl",
+          "when": "view == bookmarkShelf.tree && viewItem =~ /^(bookmark|field-url)$/",
+          "group": "2_copy@1"
+        },
+        {
+          "command": "bookmarkShelf.copyMarkdownLink",
+          "when": "view == bookmarkShelf.tree && viewItem == bookmark",
+          "group": "2_copy@2"
+        },
+        {
+          "command": "bookmarkShelf.edit",
+          "when": "view == bookmarkShelf.tree && viewItem == bookmark",
+          "group": "3_edit@1"
+        },
+        {
+          "command": "bookmarkShelf.delete",
+          "when": "view == bookmarkShelf.tree && viewItem == bookmark",
+          "group": "3_edit@2"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "bookmarkShelf.addFromSelection",
+          "when": "editorHasSelection && bookmarkShelf.state != unconfigured",
+          "group": "9_bookmarkShelf@1"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "bookmarkShelf.open",
+          "when": "false"
+        },
+        {
+          "command": "bookmarkShelf.openSharePage",
+          "when": "false"
+        },
+        {
+          "command": "bookmarkShelf.copyUrl",
+          "when": "false"
+        },
+        {
+          "command": "bookmarkShelf.copyMarkdownLink",
+          "when": "false"
+        },
+        {
+          "command": "bookmarkShelf.edit",
+          "when": "false"
+        },
+        {
+          "command": "bookmarkShelf.editField",
+          "when": "false"
+        },
+        {
+          "command": "bookmarkShelf.delete",
+          "when": "false"
+        },
+        {
+          "command": "bookmarkShelf.addFromSelection",
+          "when": "false"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Bookmark Shelf",
+      "properties": {
+        "bookmarkShelf.maxItems": {
+          "type": "integer",
+          "default": 500,
+          "minimum": 100,
+          "maximum": 2000,
+          "scope": "application",
+          "description": "%bookmarkShelf.config.maxItems%"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc -p . --noEmit",
+    "build:extension": "esbuild src/extension.ts --bundle --platform=node --format=cjs --external:vscode --outfile=out/extension.js --sourcemap",
+    "build:tests": "tsc -p .",
+    "build": "npm run typecheck && npm run build:extension",
+    "vscode:prepublish": "npm run build",
+    "lint": "eslint .",
+    "test:unit": "npm run build:tests && mocha --ui tdd --timeout 10000 \"out/test/unit/**/*.test.js\"",
+    "test:integration": "node ./out/test/runTest.js",
+    "test": "npm run build && npm run test:unit && npm run test:integration",
+    "check": "npm run lint && npm run test",
+    "package:vsix": "npm run check && vsce package --no-dependencies",
+    "release": "./scripts/publish.sh"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9",
+    "@types/mocha": "^10",
+    "@types/node": "^24",
+    "@types/vscode": "^1.90.0",
+    "@vscode/test-electron": "^3.1.0",
+    "@vscode/vsce": "^3.6.0",
+    "esbuild": "^0.25.0",
+    "eslint": "^9",
+    "glob": "^11",
+    "mocha": "^11",
+    "typescript": "^5.9.0",
+    "typescript-eslint": "^8"
+  }
+}
